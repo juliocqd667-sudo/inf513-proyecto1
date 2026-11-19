@@ -47,9 +47,10 @@ public class HiloCiclico extends Thread {
 
     private void procesarCorreo(LectorCorreo.Correo correo) {
         String remLower = correo.remitente == null ? "" : correo.remitente.toLowerCase();
-        String miCorreo = Configuracion.getMailAddress().toLowerCase();
-        if (remLower.equals(miCorreo) || remLower.contains("mailer-daemon") || remLower.contains("postmaster")) {
-            RegistroLog.access(correo.remitente, correo.subject, "IGNORADO_LOOP", "Auto-correo o rebote ignorado");
+        String subj = correo.subject == null ? "" : correo.subject;
+        if (remLower.contains("mailer-daemon") || remLower.contains("postmaster")
+                || subj.startsWith("OK [") || subj.startsWith("ERROR ")) {
+            RegistroLog.access(correo.remitente, correo.subject, "IGNORADO_LOOP", "Respuesta del sistema o rebote ignorado");
             return;
         }
         DespachadorComandos.Resultado resultado = despachador.procesar(correo.remitente, correo.subject);

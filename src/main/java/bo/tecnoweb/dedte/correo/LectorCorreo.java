@@ -114,6 +114,13 @@ public class LectorCorreo {
                 }
 
                 String subjectDecodificado = decodificarMime(subjectRaw.toString());
+
+                // No reprocesar ni borrar respuestas generadas por el propio sistema
+                // (permite probar desde la misma casilla en https://mail.tecnoweb.org.bo sin bucles)
+                if (subjectDecodificado.startsWith("OK [") || subjectDecodificado.startsWith("ERROR ")) {
+                    continue;
+                }
+
                 if (!remitente.isEmpty()) {
                     lista.add(new Correo(remitente, subjectDecodificado));
                 }
