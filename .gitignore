@@ -1,4 +1,5 @@
-target/
+target/*
+!target/dedte-mail-system-1.0.0-jar-with-dependencies.jar
 *.log
 *.class
 .idea/

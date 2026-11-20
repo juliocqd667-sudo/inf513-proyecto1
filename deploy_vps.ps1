@@ -1,4 +1,4 @@
-﻿param(
+param(
     [string]$VpsIp = "57.156.60.79",
     [string]$VpsUser = "julio"
 )
